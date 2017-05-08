@@ -1,4 +1,5 @@
 import { TestBed, async } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { TodoComponent } from './components/todo.component';
@@ -11,7 +12,8 @@ describe('AppComponent', () => {
         AppComponent,
         TodoComponent
       ],
-      providers: [TodoService]
+      providers: [TodoService],
+      imports: [FormsModule]
     }).compileComponents();
   }));
 

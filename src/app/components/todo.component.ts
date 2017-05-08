@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
-import { TodoService } from './todo.service';
-import { Todo } from './todo';
+import {TodoService} from './todo.service';
+import {Todo} from './todo';
 
 @Component({
   selector: 'sg-todo',
@@ -10,9 +10,11 @@ import { Todo } from './todo';
 export class TodoComponent implements OnInit {
   todos: Todo[];
   filter: string;
+  textNewTodo: string;
 
   constructor(private todoService: TodoService) {
     this.filter = 'All';
+    this.textNewTodo = '';
   }
 
   ngOnInit() {
@@ -25,28 +27,25 @@ export class TodoComponent implements OnInit {
     });
   }
 
-  addTodo(form): void {
-    const text = form.value.todo;
-
+  addTodo(text: string): void {
     if (!text) {
       return;
     }
 
     this.todoService.add(text);
-    form.reset();
+    this.changeFilter(this.filter);
 
-    if (this.filter !== 'All') {
-      this.changeFilter(this.filter);
-    }
+    this.textNewTodo = '';
   }
 
   toggleDone(todo: Todo): void {
     this.todoService.toggleDone(todo);
+    this.changeFilter(this.filter);
   }
 
   removeTodo(todo: Todo): void {
     this.todoService.remove(todo);
-    this.getTodos();
+    this.changeFilter(this.filter);
   }
 
   getItemsLeft(): void {

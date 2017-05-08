@@ -1,4 +1,5 @@
 import { ComponentFixture, fakeAsync, TestBed, tick, async } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 
 import { TodoComponent } from './todo.component';
 import { TodoService } from './todo.service';
@@ -15,7 +16,8 @@ describe('Component. TodoComponent', () => {
       declarations: [
         TodoComponent
       ],
-      providers: [TodoService]
+      providers: [TodoService],
+      imports: [FormsModule]
     }).compileComponents();
   }));
 
@@ -47,20 +49,37 @@ describe('Component. TodoComponent', () => {
     expect(context.todos).toEqual([new Todo(todo.text, todo.completed)]);
   }));
 
-  xit('should not add todo if provided text is empty', fakeAsync(() => {
+  it('should not add todo if provided text is empty', fakeAsync(() => {
     const timer = 1000;
+    const text  = '';
+
     context.todos = [];
 
-    context.addTodo('');
+    context.addTodo(text);
     tick(timer);
 
     expect(context.todos.length).toEqual(0);
   }));
 
-  xit('should add new todo', fakeAsync(() => {
+  it('should add new todo', fakeAsync(() => {
     const timer = 1000;
     const text = 'test todo';
     context.todos = [];
+
+    fixture.detectChanges();
+
+    context.addTodo(text);
+    tick(timer);
+
+    expect(context.todos[0]).toEqual(new Todo(text));
+  }));
+
+  it('should add new todo and filtering', fakeAsync(() => {
+    const timer = 1000;
+    const text = 'test todo';
+    context.todos = [];
+
+    fixture.detectChanges();
 
     context.addTodo(text);
     tick(timer);

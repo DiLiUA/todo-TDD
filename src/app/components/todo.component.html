@@ -1,8 +1,8 @@
 <section class="todoapp">
   <header class="header">
     <h1>todos</h1>
-    <form (ngSubmit)="addTodo(todoForm)" #todoForm="ngForm">
-      <input name="todo" type="text" class="new-todo" placeholder="todo text" ngModel>
+    <form (ngSubmit)="addTodo(textNewTodo)">
+      <input name="todo" type="text" class="new-todo" placeholder="todo text" [(ngModel)]="textNewTodo">
     </form>
   </header>
 
