@@ -1,0 +1,35 @@
+<section class="todoapp">
+  <header class="header">
+    <h1>todos</h1>
+    <form (ngSubmit)="addTodo(textNewTodo)">
+      <input name="todo" type="text" class="new-todo" placeholder="todo text" [(ngModel)]="textNewTodo">
+    </form>
+  </header>
+
+  <section class="main">
+    <ul class="todo-list">
+      <li *ngFor="let todo of todos">
+        <div class="view">
+          <input type="checkbox" class="toggle" id="{{'todo' + todo.text}}" [(checked)]="todo.completed" (change)="toggleDone(todo)">
+          <label for="{{'todo' + todo.text}}">{{todo.text}}</label>
+          <button type="button" class="destroy" (click)="removeTodo(todo)"></button>
+        </div>
+      </li>
+      <li *ngIf="filter !== 'All' && !todos.length" class="no-items">No items</li>
+    </ul>
+  </section>
+
+  <footer class="footer" *ngIf="filter !== 'All' || todos?.length">
+    <ul class="filters">
+      <li>
+        <a href="#" (click)="changeFilter('All')" [class.selected]="filter === 'All'">All</a>
+      </li>
+      <li>
+        <a href="#" (click)="changeFilter('Active')" [class.selected]="filter === 'Active'">Active</a>
+      </li>
+      <li>
+        <a href="#" (click)="changeFilter('Completed')" [class.selected]="filter === 'Completed'">Completed</a>
+      </li>
+    </ul>
+  </footer>
+</section>
